@@ -5,10 +5,7 @@
 		<title>SNAKE - play</title>
 		<script src="snake_game.js"></script>
 		<style>
-			table {
-				margin-left: auto;
-				margin-right: auto;
-			}
+			/*Game styles:*/
 			.left {
 				transform: rotate(-0.25turn);
 			}
@@ -18,30 +15,120 @@
 			.bottom {
 				transform: rotate(0.5turn);
 			}
-			#content, button {
-				background-color: rgb(81, 81, 81);
-				font-size: 20px;
-				text-align: center;
-				width: 400px;
-				padding: 10px;
-				margin: auto;
-				border: 3px solid orange;
-				border-radius: 10px;
-				color: white;
+
+			/*Theme setup*/
+			html, body {
+				height: 99%;
 			}
 			body {
 				background-color: rgb(195, 195, 195);
 			}
+
+			/*StartPopup setting*/
+			#startPopup, #menu {
+				display: flex;
+				align-items: center;
+				height: 100%;
+				width: 100%;
+				justify-content: center;
+				flex-direction: column;
+			}
+				#startPopup > div, #menu > div {
+					background-color: whitesmoke;
+					font-size: 20px;
+					text-align: center;
+					width: 400px;
+					padding: 10px;
+					border: 1px solid black;
+					border-radius: 10px;
+				}
+				#startPopup button, #menu button {
+					font-size: 20px;
+					background-color: whitesmoke;
+					width: 400px;
+					padding: 10px;
+					border: 1px solid black;
+					border-radius: 10px;
+					margin-top: 20px;
+				}
+
+			#menu {
+				position: fixed;
+				z-index: 2;
+			}
+			/*Game setting*/
+			#game, #table {
+				width: 100%;
+				height: 100%;
+			}
+			#table {
+				display: flex;
+				justify-content: center;
+				flex-direction: column;
+				align-items: center;
+			}
+				#table * {
+					flex-wrap: nowrap;
+					gap: 0px;
+					flex-shrink: 1;
+					flex-grow: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+
+			#controlls {
+				position: absolute;
+				left: 10px;
+				padding: 10px;
+				font-size: 20px;
+				border: 1px solid black;
+				border-radius: 10px;
+			}
+			#score {
+				position: absolute;
+				right: 10px;
+				color: white;
+				font-size: 40px;
+			}
+			#score img {
+				width: 50px;
+			}
+			.hidden {
+				visibility: collapse;
+				position: fixed;
+			}
+
 		</style>
 	</head>
 	<body>
-		<div id="content">
-			<h1>Snake game</h1>
-			<p>Speed: <input min="10" max="100" type="range" id="gameSpeed" /></p>
-			<p>Map size: <input min="4" max="10" type="range" id="mapSize" /></p>
-			<p>Able to walk through walls <input type="checkbox" id="walkThroughWalls" /></p>
-			<p>Add barriers <input type="checkbox" id="addBariers" /></p>
-			<button onclick="startGame()">Start!</button>
+		<div id="startPopup">
+			<div>
+				<h1>Snake game</h1>
+				<p>Speed: <input min="10" max="100" type="range" id="gameSpeed" /></p>
+				<p>Map size: <input min="4" max="10" type="range" id="mapSize" /></p>
+				<p>Able to walk through walls <input type="checkbox" id="walkThroughWalls" /></p>
+				<p>Add barriers <input type="checkbox" id="addBariers" /></p>
+			</div>
+			<button onclick="game.start()">Start!</button>
+			<button onclick="game.menu.showHowToPlay()">How to play?</button>
+		</div>
+		<div id="game" class="hidden">
+			<button id="controlls" onclick="game.menu.show()">Pause [Esc]</button>
+			<div id="score">
+				<span id="apples"></span><img src="appleCell.png" />
+				<span id="barrierContainer"><span id="barriers"></span><img src="barierCell.png" /></span>
+			</div>
+			<div id="menu" class="hidden">
+				<div>
+					<h2>Game paused</h2>
+					<button onclick="game.menu.resume()">Resume</button>
+					<button onclick="game.menu.showHowToPlay()">How to play?</button>
+					<button onclick="game.menu.restart()">Restart</button>
+					<button onclick="game.reset()">Quit</button>
+				</div>
+			</div>
+			<div id="table"></div>
 		</div>
 	</body>
 </html>
