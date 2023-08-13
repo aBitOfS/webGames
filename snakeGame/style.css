@@ -1,0 +1,110 @@
+/*Game styles:*/
+.left {
+	transform: rotate(-0.25turn);
+}
+.right {
+	transform: rotate(0.25turn);
+}
+.bottom {
+	transform: rotate(0.5turn);
+}
+
+/*Theme setup*/
+html, body {
+	height: 99%;
+}
+body {
+	background-color: rgb(195, 195, 195);
+}
+
+/*StartPopup setting*/
+#startPopup, #menu {
+	display: flex;
+	align-items: center;
+	height: 100%;
+   	width: 100%;
+   	justify-content: center;
+   	flex-direction: column;
+}
+	#startPopup > div, #menu > div {
+		background-color: whitesmoke;
+		font-size: 20px;
+		text-align: center;
+		width: 400px;
+		padding: 10px;
+		border: 1px solid black;
+		border-radius: 10px;
+	}
+	#startPopup button, #menu button {
+		font-size: 20px;
+		background-color: whitesmoke;
+		width: 400px;
+		padding: 10px;
+		border: 1px solid black;
+		border-radius: 10px;
+		margin-top: 20px;
+	}
+
+#menu {
+	position: fixed;
+	z-index: 2;
+}
+
+/*Game setting*/
+#game, #table {
+	width: 100%;
+	height: 100%;
+}
+#table {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: stretch;
+}
+   	#table * {
+   		display: flex;
+   		flex-wrap: nowrap;
+   		gap: 0px;
+   		flex-shrink: 1;
+   		flex-grow: 0;
+   		align-items: center;
+   		justify-content: center;
+   	}
+    #table div > div {
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+    #table img {
+        width: 100%;
+    }
+
+#controlls {
+	position: absolute;
+	left: 10px;
+	padding: 10px;
+	font-size: 20px;
+	border: 1px solid black;
+	border-radius: 10px;
+}
+#score {
+	position: absolute;
+	right: 10px;
+	color: white;
+	font-size: 40px;
+}
+#score img {
+	width: 50px;
+}
+.hidden {
+	visibility: collapse;
+	position: fixed;
+}
+
+@media only screen and (orientation: landscape) {
+    #table {
+    	align-items: center;
+    }
+    #table * {
+        flex-grow: 0;
+    }
+}
