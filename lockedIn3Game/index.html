@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>LOCKED in 3 - play</title>
+		<script src="lockedIn3.js"></script>
+		<link rel="stylesheet" href="style.css" type="text/css"/>
+	</head>
+	<body style="overflow: hidden; margin: 0px;">
+		<button id="start" onclick="game.start()">
+			<img src="startImage.png" />
+		</button>
+		<div id="game" style="visibility: collapse;" oncontextmenu="return false;">
+			<button id="openMenu">Menu</button>
+			<div id="menu">
+
+			</div>
+
+			<div id="content"></div>
+
+			<div id="playerContainer">
+				<div id="playerImage">
+					<img id="playerTool" />
+					<img src="Player.png" />
+				</div>
+			</div>
+
+			<div id="toolbar">
+				<div onclick="game.changeMode(1)">
+					<img src="Sword.png">
+				</div>
+				<div onclick="game.changeMode(2)">
+					<img src="Bow.png">
+				</div>
+				<div onclick="game.changeMode(3)">
+					<img src="Pickaxe.png">
+				</div>
+				<div onclick="game.changeMode(4)">
+					<img src="Build.png">
+				</div>
+				<div onclick="game.changeMode(5)">
+					<img src="House.png">
+				</div>
+			</div>
+			<div id="toolbarCategories">
+
+			</div>
+
+			<canvas style="width:100%" width="3840" height="2160" id="canvas"></canvas>
+		</div>
+		<div id="imgHolder">
+
+		</div>
+	</body>
+</html>

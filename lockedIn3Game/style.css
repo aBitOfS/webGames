@@ -1,0 +1,97 @@
+/*Page*/
+body, html {
+	margin: 0px;
+}
+
+#imgHolder {
+	position: fixed;
+	top: 200vh;
+}
+#game > div {
+	position: fixed;
+}
+
+/*Start button*/
+#start {
+	position: fixed;
+	z-index: 10;
+	height: 100vh;
+	width: 100%;
+	margin: auto;
+	background-color: rgba(0,0,0,0);
+}
+	#start img {
+		width: 10%;
+	}
+/*Game*/
+	/*Player*/
+	#playerContainer {
+		display: flex;
+		height: 100vh;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+	}
+	#playerImage img {
+		width: 100%;
+	}
+	#playerTool {
+		position: absolute;
+		transform: translate(40%, -85%);
+		animation: playertoolanimation 0.5s infinite alternate cubic-bezier(0.4, 0, 1, 1);
+	}
+	@keyframes playertoolanimation {
+		0% {
+			transform: translate(60%, -75%) rotateZ(0.2turn);
+		}
+		50% {
+			transform: translate(40%, -85%);
+		}
+		100% {
+			transform: translate(20%, -75%) rotateZ(-0.2turn);
+		}
+	}
+	
+	/*Toolbar*/
+	#toolbar {
+		position: fixed;
+		bottom: 0px;
+		left: 0px;
+		width: 100%;
+		height: 25vh;
+
+		background-color: rgba(0, 50, 70,0.3);
+
+		display: flex;
+		gap: 50px;
+	}
+		#toolbar div {
+			background-color: rgba(0, 120, 220, 0.5)
+		}
+		#toolbar img {
+			flex-shrink: 1;
+			width: 100%;
+		}
+		#toolbar div:hover {
+			transform: scale(1.1);
+			background-color: rgba(0, 120, 220, 0.8);
+			transition: transform linear 0.2s;
+		}
+	/*Menu*/
+	#openMenu {
+		position: fixed;
+		z-index: 2;
+		left: 10px;
+		top: 10px;
+		padding: 10px;
+		font-size: 25px;
+		background-color: rgba(0, 120, 220, 0.5);
+		border: 0px black solid;
+		border-radius: 5px;
+		color: white;
+	}
+		#openMenu:hover {
+			transform: scale(1.1);
+			background-color: rgba(0, 120, 220, 0.8);
+			transition: transform linear(0 0%, 1 100%) 0.2s;
+		}
