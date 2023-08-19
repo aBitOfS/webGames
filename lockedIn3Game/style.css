@@ -1,0 +1,135 @@
+/*Page*/
+body, html {
+	margin: 0px;
+	color: white;
+	font-family: sans-serif;
+}
+
+* {
+	user-select: none;
+}
+
+#game > div {
+	position: fixed;
+}
+
+/*Start button*/
+#start {
+	position: fixed;
+	z-index: 10;
+	height: 100vh;
+	width: 100%;
+	margin: auto;
+	background-color: rgba(255,255,255,0.3);
+}
+	#start img {
+		width: min(10%, 100px);
+	}
+	#start > div {
+		background-color: rgb(1 121 194);
+		padding: 20px;
+		border-radius: 10px;
+		position: absolute;
+		color: white;
+		left: 10px;
+		bottom: 10px;
+		text-align: left;
+	}
+/*Game*/
+	/*Player*/
+	#playerContainer {
+		display: flex;
+		height: 100vh;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+	}
+	#playerImage img {
+		width: 100%;
+	}
+	#playerTool {
+		position: absolute;
+		transform: translate(40%, -85%);
+	}
+	@keyframes playertoolanimation {
+		0% {
+			transform: translate(60%, -75%) rotateZ(0.2turn);
+		}
+		50% {
+			transform: translate(40%, -85%);
+		}
+		100% {
+			transform: translate(20%, -75%) rotateZ(-0.2turn);
+		}
+	}
+	
+	/*Toolbar*/
+	#toolbar {
+		position: fixed;
+		bottom: 0px;
+		left: 0px;
+		width: 100%;
+		height: min(25vh, 250px);
+
+		background-color: rgba(0, 50, 70,0.5);
+
+		display: flex;
+	}
+		#toolbar > div {
+			margin: -20px 40px 10px 40px;
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+			text-align: center;
+			align-items: center;
+			transition: transform linear 0.1s;
+			border-radius: 10px;
+		}
+		#toolbar h1 {
+			padding: 40px;
+			margin: -20px 0px 10px 0px;
+			transform: rotateZ(-0.25turn);
+			transition: transform linear 0.1s;
+			align-self: center;
+			background-color: rgba(0, 0, 0, 0.3);
+			border-radius: 10px;
+		}
+		#toolbar h1:hover {
+			transform: rotateZ(-0.25turn) scale(1.1);
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		#toolbar > div:hover {
+			transform: scale(1.1) translate(0px,-15px);
+			background-color: rgba(0, 120, 220, 0.8);
+		}
+			#toolbar img {
+				flex-shrink: 1;
+				flex-grow: 1;
+				height: calc(100% - 60px);
+			}
+
+	.toolbarSelected {
+		transform: translate(0px,-50px);
+	}
+		.toolbarSelected:hover {
+			transform: scale(1.1) translate(0px,-35px)!IMPORTANT;
+		}
+	/*Menu*/
+	#openMenu {
+		position: fixed;
+		z-index: 2;
+		left: 10px;
+		top: 10px;
+		padding: 10px;
+		font-size: 25px;
+		background-color: rgba(0, 120, 220, 0.5);
+		border: 0px black solid;
+		border-radius: 5px;
+		color: white;
+	}
+		#openMenu:hover {
+			transform: scale(1.1);
+			background-color: rgba(0, 120, 220, 0.8);
+			transition: transform linear(0 0%, 1 100%) 0.2s;
+		}
