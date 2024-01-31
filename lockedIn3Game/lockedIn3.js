@@ -66,13 +66,13 @@ var game = function() {
 					x += w/2 - size[0]/2;
 					y += h/2 - size[1]/2;
 					// Border
-					canvas.fillStyle = "black";
+					canvas.fillStyle = "rgba(10,10,10,0.7)";
 					canvas.fillRect(x,y,size[0],size[1]);
 					// LineBg
-					x += size[0]/6;
-					y += size[1]/6;
-					w = size[0]/3*2;
-					h = size[1]/3*2;
+					x += size[0]/10;
+					y += size[1]/10;
+					w = size[0]/5*4;
+					h = size[1]/4*3;
 					canvas.fillStyle = "darkblue";
 					canvas.fillRect(x,y,w,h);
 					// Line
@@ -80,17 +80,17 @@ var game = function() {
 					canvas.fillRect(x,y,w*procent,h);
 				}
 			}
+			const grassColors = ["#5BBA6F","#3FA34D","#2A9134","#137547","#054A29"];
 			
 			class GrassCell extends NormalCell {
 				constructor(position) {
-					const grassColors = ["#5BBA6F","#3FA34D","#2A9134","#137547","#054A29"];
 					super(grassColors[random(5)],position);
 				}
 			}
 			class RockCell extends BreakableCell {
 				constructor(position) {
 					const rockColors = ["#aaaaaa","#bbbbbb","#cccccc","#dddddd","#eeeeee"];
-					super(rockColors[random(5)], position, 10, false);
+					super(rockColors[random(5)], position, 5 + random(20), false);
 				}
 				render(x,y,w,h, mining) {
 					super.render(x,y,w,h);
@@ -145,11 +145,21 @@ var game = function() {
 					this.parent.mine(strength);
 				}
 			}
+
+			const treeTypes = [	["https://cdn.pixabay.com/photo/2015/12/10/17/46/fir-1086772_640.png",10, false], ["https://cdn.pixabay.com/photo/2014/12/22/00/07/tree-576847_1280.png", 5, false] ];
+			class TreeCell extends BuildingCell {
+				constructor(position) {
+					let treeType = random(treeTypes.length);
+					super(grassColors[random(grassColors.length)], position,[1,1], treeTypes[treeType][0], treeTypes[treeType][1], treeTypes[treeType][2]);
+				}
+
+			}
 			
 			return {
 				Normal: NormalCell,
 				Grass: GrassCell,
 				Rock: RockCell,
+				Tree: TreeCell,
 				Building: BuildingCell,
 				Builded: BuildedCell,
 			};
@@ -163,7 +173,7 @@ var game = function() {
 			for(let i = 0; i < map.SIZE; i++) {
 				newMap[i] = [];
 				for (let j = 0; j < map.SIZE; j++) {
-					newMap[i][j] = (random(50) === 0) ? new this.cells.Rock([i,j]) : new this.cells.Grass([i,j]);
+					newMap[i][j] = (random(40) === 0) ? (random(3) === 0 ? new this.cells.Rock([i,j]) : new this.cells.Tree([i,j])) : new this.cells.Grass([i,j]);
 				}
 			}
 			return newMap;
@@ -200,19 +210,26 @@ var game = function() {
 			var under = this.getLocationUnder(0,0);
 			var checkDist = Math.floor((player.SIZE+3)/2);
 
+			if (this.canMove(position,under, checkDist)) // Orginal movement
+				player.position = position;
+			else if (this.canMove([position[0],player.position[1]],under, checkDist)) // One-axcies move when other blocked
+				player.position[0] = position[0];
+			else if (this.canMove([player.position[0],position[1]],under, checkDist)) // -||- but second axcies
+				player.position[1] = position[1];
+		}
+		canMove(position, under, checkDist) {
 			try
 			{
 				for (let i = under[0]-checkDist; i <= under[0] + checkDist; i++)
 					for (let j = under[1]-checkDist; j <= under[1] + checkDist; j++)
 						if (this.distanceBetween(position,[-i+map.SIZE/2-0.5,-j+map.SIZE/2-0.5]) < checkDist-0.5 && !map.map[i][j].walkable)
-							return;	
+							return false;	// Obstackle
 			}
 			catch
 			{
-				return;
+				return false; // Out of the map
 			}
-			
-			player.position = position;
+			return true;
 		}
 		mine() {
 			let pos = this.getLocationUnder(mouse.position);
@@ -320,7 +337,7 @@ var game = function() {
 	const player = new class {
 		position = [0,0]; // Relative to center of map, growing to top left
 		get SPEED() { return 0.75; }
-		get SIZE() { return 2; }
+		get SIZE() { return 1.9; }
 		mode = 0; // 0 - default, 1 - buildingCategories, 2 - building, 3 - equipment
 		option = 0; // 0 - none, next - depending on mode
 		updateSize() {
@@ -344,6 +361,7 @@ var game = function() {
 				htmlElements.toolbar.innerHTML = newItems;
 			},
 		};
+		resources = {wood : 0, stone : 0, apples : 0}
 	};
 
 	// Input
@@ -532,3 +550,9 @@ var game = function() {
 		},
 	};
 }();
+
+// Still having trouble to walk close to walls // weardly walking between two blocks (X__X)
+//  XX   XX  This problem may be caused by wrong collision detection which seems to 'cut' edges
+// XXXX XXXX so player can stuck beeing in place of ^ so he must go back and omit obstackle from distance
+// XXXX XXXX
+//  XX ^ XX 

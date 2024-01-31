@@ -116,10 +116,11 @@ body, html {
 			transform: scale(1.1) translate(0px,-35px)!IMPORTANT;
 		}
 	/*Menu*/
-	#openMenu {
+	#openMenu {	left: 10px;	}
+	#openEquipment { right: 10px; }
+	#openMenu, #openEquipment {
 		position: fixed;
 		z-index: 2;
-		left: 10px;
 		top: 10px;
 		padding: 10px;
 		font-size: 25px;
@@ -127,9 +128,9 @@ body, html {
 		border: 0px black solid;
 		border-radius: 5px;
 		color: white;
+		transition: transform linear(0 0%, 1 100%) 0.2s;
 	}
-		#openMenu:hover {
+		#openMenu:hover, #openEquipment:hover {
 			transform: scale(1.1);
 			background-color: rgba(0, 120, 220, 0.8);
-			transition: transform linear(0 0%, 1 100%) 0.2s;
 		}
